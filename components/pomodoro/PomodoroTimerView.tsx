@@ -146,66 +146,62 @@ export function PomodoroTimerView({
     <section className="app-section">
       <SectionHeader
         eyebrow="Pomodoro"
-        title="A calm, cute focus loop that actually tracks sessions."
+        title="Pomodoro timer"
         copy="Start, pause, reset, customize durations, and save completed focus minutes into reports."
       />
 
-      <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.82fr)]">
         <AppCard className="relative overflow-hidden bg-lavender/55">
           {celebrate ? <div className="confetti-burst" /> : null}
           <div className="absolute inset-0 pomodoro-noise opacity-70" />
-          <div className="relative z-10 grid gap-8 md:grid-cols-[1fr_0.85fr]">
-            <div className="grid place-items-center">
-              <div
-                className="product-timer-ring"
-                style={{ "--timer-value": `${progress}%` } as React.CSSProperties}
-              >
-                <div className="product-orb" />
-                <div className="text-center">
-                  <p className="text-xs font-black uppercase tracking-[0.24em] text-ink/42">{phase === "focus" ? "Focus" : "Break"}</p>
-                  <div className="mt-2 text-6xl font-black tracking-normal md:text-7xl">{minutes}:{seconds}</div>
-                  <p className="mt-3 text-sm font-black text-ink/48">{statusLabel}</p>
-                </div>
+          <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center">
+            <div
+              className="product-timer-ring"
+              style={{ "--timer-value": `${progress}%` } as React.CSSProperties}
+            >
+              <div className="product-orb" />
+              <div className="text-center">
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-ink/42">{phase === "focus" ? "Focus" : "Break"}</p>
+                <div className="mt-2 text-5xl font-black tracking-normal md:text-6xl">{minutes}:{seconds}</div>
+                <p className="mt-3 text-sm font-black text-ink/48">{statusLabel}</p>
               </div>
             </div>
 
-            <div className="flex flex-col justify-center gap-4">
-              <div className="rounded-[1.4rem] bg-white/70 p-3 shadow-sm">
-                <div className="grid grid-cols-4 gap-2">
-                  {modes.map((item) => (
-                    <button
-                      key={item}
-                      className={`rounded-full px-3 py-3 text-sm font-black transition ${mode === item ? "bg-ink text-white" : "text-ink/55 hover:bg-ink/6"}`}
-                      onClick={() => changeMode(item)}
-                    >
-                      {item}
-                    </button>
-                  ))}
+            <div className="mt-5 w-full rounded-[1.4rem] bg-white/70 p-3 shadow-sm">
+              <div className="grid grid-cols-4 gap-2">
+                {modes.map((item) => (
+                  <button
+                    key={item}
+                    className={`rounded-full px-3 py-3 text-sm font-black transition ${mode === item ? "bg-ink text-white" : "text-ink/55 hover:bg-ink/6"}`}
+                    onClick={() => changeMode(item)}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {mode === "Custom" ? (
+              <div className="mt-3 grid w-full grid-cols-2 gap-3 rounded-[1.4rem] bg-white/70 p-4 shadow-sm">
+                <div className="space-y-2">
+                  <FieldLabel>Focus</FieldLabel>
+                  <input className="app-input" type="number" min={1} step={1} value={data.profile.customFocusMinutes} onChange={(event) => updateProfile({ customFocusMinutes: Number(event.target.value) })} />
+                </div>
+                <div className="space-y-2">
+                  <FieldLabel>Break</FieldLabel>
+                  <input className="app-input" type="number" min={1} step={1} value={data.profile.customBreakMinutes} onChange={(event) => updateProfile({ customBreakMinutes: Number(event.target.value) })} />
                 </div>
               </div>
+            ) : null}
 
-              {mode === "Custom" ? (
-                <div className="grid grid-cols-2 gap-3 rounded-[1.4rem] bg-white/70 p-4 shadow-sm">
-                  <div className="space-y-2">
-                    <FieldLabel>Focus</FieldLabel>
-                    <input className="app-input" type="number" min={1} step={1} value={data.profile.customFocusMinutes} onChange={(event) => updateProfile({ customFocusMinutes: Number(event.target.value) })} />
-                  </div>
-                  <div className="space-y-2">
-                    <FieldLabel>Break</FieldLabel>
-                    <input className="app-input" type="number" min={1} step={1} value={data.profile.customBreakMinutes} onChange={(event) => updateProfile({ customBreakMinutes: Number(event.target.value) })} />
-                  </div>
-                </div>
-              ) : null}
-
-              <div className="grid grid-cols-3 gap-3">
-                <button className="timer-action" aria-label="Start timer" onClick={start} disabled={status === "running"}><Play size={19} /><span>Start</span></button>
-                <button className="timer-action" aria-label="Pause timer" onClick={pause} disabled={status !== "running"}><Pause size={19} /><span>Pause</span></button>
-                <button className="timer-action" aria-label="Reset timer" onClick={reset}><RotateCcw size={19} /></button>
-              </div>
-              <div className="rounded-[1.4rem] bg-white/70 p-4 text-sm font-bold leading-6 text-ink/58 shadow-sm">
-                <Sparkles className="mb-2 text-electric" size={18} />
-                {phase === "break" ? breakReminder : "Protect this one loop. Your only job is to stay with the next minute."}
-              </div>
+            <div className="mt-4 grid w-full grid-cols-3 gap-3">
+              <button className="timer-action" aria-label="Start timer" onClick={start} disabled={status === "running"}><Play size={19} /><span>Start</span></button>
+              <button className="timer-action" aria-label="Pause timer" onClick={pause} disabled={status !== "running"}><Pause size={19} /><span>Pause</span></button>
+              <button className="timer-action" aria-label="Reset timer" onClick={reset}><RotateCcw size={19} /><span>Reset</span></button>
+            </div>
+            <div className="mt-4 w-full rounded-[1.4rem] bg-white/70 p-4 text-sm font-bold leading-6 text-ink/58 shadow-sm">
+              <Sparkles className="mb-2 text-electric" size={18} />
+              {phase === "break" ? breakReminder : "Protect this one loop. Your only job is to stay with the next minute."}
             </div>
           </div>
         </AppCard>

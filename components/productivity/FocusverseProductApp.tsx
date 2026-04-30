@@ -53,6 +53,12 @@ export function FocusverseProductApp() {
   const switchView = (view: string) => {
     if (isViewId(view)) {
       setActiveView(view);
+      window.requestAnimationFrame(() => {
+        const top = contentRef.current?.getBoundingClientRect().top ?? 0;
+        if (top < 0 || top > window.innerHeight * 0.24) {
+          contentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
     }
   };
 

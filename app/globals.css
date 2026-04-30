@@ -528,7 +528,7 @@ select.app-input {
   --timer-value: 0%;
   position: relative;
   display: grid;
-  width: min(29rem, 82vw);
+  width: min(22rem, 76vw);
   aspect-ratio: 1;
   place-items: center;
   border-radius: 999px;
@@ -702,7 +702,7 @@ select.app-input {
   }
 
   .product-timer-ring {
-    width: min(21rem, 84vw);
+    width: min(18rem, 82vw);
   }
 
   .product-orb {
