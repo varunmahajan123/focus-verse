@@ -10,7 +10,9 @@ import {
   RotateCcw,
   Settings,
   Target,
-  TimerReset
+  TimerReset,
+  Moon,
+  Sun
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -27,6 +29,7 @@ import { TaskManager } from "@/components/tasks/TaskManager";
 import { OnboardingWizard } from "@/components/onboarding/OnboardingWizard";
 import { useFocusverseApp } from "@/components/productivity/useFocusverseApp";
 import { OnboardingPayload } from "@/types/focusverse";
+import { useTheme } from "next-themes";
 
 const navItems = [
   { id: "dashboard", label: "Dashboard", icon: Home },
@@ -47,6 +50,7 @@ export function FocusverseProductApp() {
   const [activeView, setActiveView] = useState<ViewId>("dashboard");
   const [setupOpen, setSetupOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const { theme, setTheme } = useTheme();
 
   const isViewId = (view: string): view is ViewId => navItems.some((item) => item.id === view);
 
@@ -93,10 +97,10 @@ export function FocusverseProductApp() {
 
   if (!app.hydrated) {
     return (
-      <section className="grid min-h-[60vh] place-items-center bg-[#f8f1e8] px-5">
-        <div className="rounded-[2rem] bg-white/70 p-8 text-center shadow-soft">
+      <section className="grid min-h-[60vh] place-items-center bg-background px-5">
+        <div className="rounded-[2rem] bg-surface-elevated p-8 text-center shadow-soft">
           <div className="mx-auto mb-4 h-12 w-12 animate-pulse rounded-full bg-mist" />
-          <p className="text-sm font-black uppercase tracking-[0.24em] text-ink/45">Loading Focusverse</p>
+          <p className="text-sm font-black uppercase tracking-[0.24em] text-muted-foreground">Loading Focusverse</p>
         </div>
       </section>
     );
@@ -106,7 +110,7 @@ export function FocusverseProductApp() {
   const ActiveIcon = active.icon;
 
   return (
-    <section className={`focus-app-shell ${app.data.profile.theme === "Soft Dark" ? "soft-dark" : ""}`}>
+    <section className="focus-app-shell transition-colors duration-300">
       {setupOpen ? (
         <OnboardingWizard onComplete={completeOnboarding} onClose={() => setSetupOpen(false)} />
       ) : null}
@@ -151,9 +155,9 @@ export function FocusverseProductApp() {
               ["Local-first", "Tasks, goals, sessions, and reports save in this browser."],
               ["No fake pressure", "Reports unlock as your real activity grows."]
             ].map(([title, copy]) => (
-              <div key={title} className="app-card bg-white/72">
+              <div key={title} className="app-card">
                 <h3 className="text-xl font-black tracking-normal">{title}</h3>
-                <p className="mt-2 text-sm font-semibold leading-6 text-ink/56">{copy}</p>
+                <p className="mt-2 text-sm font-semibold leading-6 text-muted-foreground">{copy}</p>
               </div>
             ))}
           </div>
@@ -162,14 +166,15 @@ export function FocusverseProductApp() {
 
       {!app.data.profile.onboarded ? null : (
         <div ref={contentRef} data-testid="app-content" className="mx-auto flex max-w-7xl gap-5 px-4 py-6 pb-40 md:px-6 md:pb-24 lg:py-8">
-        <aside className="sticky top-4 hidden h-[calc(100vh-2rem)] w-64 shrink-0 rounded-[2rem] border border-ink/8 bg-white/68 p-3 shadow-soft backdrop-blur-xl lg:block">
-          <div className="mb-4 rounded-[1.5rem] bg-ink p-4 text-white">
-            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.22em] text-white/45">
+        <aside className="sticky top-4 hidden h-[calc(100vh-2rem)] w-64 shrink-0 rounded-[2rem] border border-border bg-surface p-3 shadow-soft backdrop-blur-xl lg:block flex-col justify-between flex">
+          <div>
+          <div className="mb-4 rounded-[1.5rem] bg-foreground p-4 text-background">
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.22em] text-background/60">
               <Flame size={14} />
               Focusverse
             </div>
             <p className="mt-4 text-2xl font-black tracking-normal">Level {app.data.level}</p>
-            <p className="text-sm font-bold text-white/55">{app.data.xp} XP • {app.data.streak} day streak</p>
+            <p className="text-sm font-bold text-background/80">{app.data.xp} XP • {app.data.streak} day streak</p>
           </div>
           <nav className="space-y-1">
             {navItems.map((item) => {
@@ -189,10 +194,21 @@ export function FocusverseProductApp() {
               );
             })}
           </nav>
+          </div>
+          <div className="pt-3 mt-3 border-t border-border">
+            <button
+              className="app-nav-item"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              type="button"
+            >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+              <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+            </button>
+          </div>
         </aside>
 
         <div className="min-w-0 flex-1">
-          <div className="sticky top-3 z-30 mb-5 hidden items-center justify-between rounded-full border border-ink/8 bg-white/78 px-3 py-2 shadow-soft backdrop-blur-xl md:flex lg:hidden">
+          <div className="sticky top-3 z-30 mb-5 hidden items-center justify-between rounded-full border border-border bg-surface-elevated px-3 py-2 shadow-soft backdrop-blur-xl md:flex lg:hidden">
             <div className="flex items-center gap-2 pl-2 text-sm font-black">
               <ActiveIcon size={17} />
               {active.label}
@@ -203,7 +219,7 @@ export function FocusverseProductApp() {
                 return (
                   <button
                     key={item.id}
-                    className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${activeView === item.id ? "bg-ink text-white" : "text-ink/55"}`}
+                    className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${activeView === item.id ? "bg-foreground text-background" : "text-muted-foreground"}`}
                     onClick={() => switchView(item.id)}
                     type="button"
                     title={item.label}
@@ -286,13 +302,13 @@ export function FocusverseProductApp() {
 
       {app.data.profile.onboarded ? (
         <>
-          <nav className="fixed inset-x-3 bottom-3 z-50 grid grid-cols-5 gap-1 rounded-[1.6rem] border border-ink/8 bg-white/90 p-2 shadow-soft backdrop-blur-xl md:hidden">
+          <nav className="fixed inset-x-3 bottom-3 z-50 grid grid-cols-5 gap-1 rounded-[1.6rem] border border-border bg-surface p-2 shadow-soft backdrop-blur-xl md:hidden">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
                 <button
                   key={item.id}
-                  className={`grid min-h-12 place-items-center rounded-[1.1rem] px-1 text-[9px] font-black ${activeView === item.id ? "bg-ink text-white" : "text-ink/55"}`}
+                  className={`grid min-h-12 place-items-center rounded-[1.1rem] px-1 text-[9px] font-black ${activeView === item.id ? "bg-foreground text-background" : "text-muted-foreground"}`}
                   onClick={() => switchView(item.id)}
                   type="button"
                   aria-current={activeView === item.id ? "page" : undefined}

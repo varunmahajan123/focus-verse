@@ -2,9 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --font-sans: "Inter", "SF Pro Display", "Segoe UI", system-ui, sans-serif;
-  color-scheme: light;
+@layer base {
+  :root {
+    --font-sans: "Inter", "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+    color-scheme: light;
+
+    --bg: #F8F5EE;
+    --surface: #FFFFFF;
+    --surface-soft: #F2EDE4;
+    --text: #08111F;
+    --text-muted: #667085;
+    --border: rgba(8,17,31,0.10);
+    --primary: #0B1220;
+    --primary-text: #FFFFFF;
+    --secondary: #EEF2FF;
+    --secondary-text: #111827;
+    --accent: #2563EB;
+    --accent-soft: #DBEAFE;
+
+    /* TailWind Mappings */
+    --background: var(--bg);
+    --foreground: var(--text);
+    --surface-elevated: var(--surface);
+    --muted: var(--surface-soft);
+    --muted-foreground: var(--text-muted);
+    --primary-foreground: var(--primary-text);
+
+    /* Legacy semantic overrides so existing Tailwind classes auto-adapt */
+    --color-ink: var(--text);
+    --color-night: #020712;
+    --color-cream: var(--bg);
+    --color-electric: var(--accent);
+    --accent-lavender: var(--accent-soft);
+    --accent-sage: var(--surface-soft);
+    --accent-blue: var(--accent-soft);
+    --accent-peach: var(--secondary);
+
+    --card-shadow: 0 28px 90px rgba(12, 22, 44, 0.08);
+    --glow: rgba(59, 167, 255, 0.45);
+  }
+
+  .dark {
+    color-scheme: dark;
+    
+    --bg: #080D18;
+    --surface: #111827;
+    --surface-soft: #172033;
+    --text: #F8FAFC;
+    --text-muted: #A8B3C7;
+    --border: rgba(255,255,255,0.10);
+    --primary: #EAF2FF;
+    --primary-text: #07101F;
+    --secondary: #1E293B;
+    --secondary-text: #F8FAFC;
+    --accent: #60A5FA;
+    --accent-soft: rgba(96,165,250,0.16);
+
+    /* TailWind Mappings */
+    --background: var(--bg);
+    --foreground: var(--text);
+    --surface-elevated: var(--surface);
+    --muted: var(--surface-soft);
+    --muted-foreground: var(--text-muted);
+    --primary-foreground: var(--primary-text);
+
+    /* Semantic overrides so Tailwind classes like bg-cream auto-adapt */
+    --color-ink: var(--text);
+    --color-night: var(--bg);
+    --color-cream: var(--surface-soft);
+    --color-electric: var(--accent);
+    --accent-lavender: var(--secondary);
+    --accent-sage: var(--surface-soft);
+    --accent-blue: var(--accent-soft);
+    --accent-peach: var(--surface);
+
+    --card-shadow: 0 28px 90px rgba(0, 0, 0, 0.4);
+    --glow: rgba(96, 165, 250, 0.18);
+  }
 }
 
 * {
@@ -12,14 +86,15 @@
 }
 
 html {
-  background: #020712;
+  background: var(--color-night);
   scroll-behavior: auto;
 }
 
 body {
   margin: 0;
   overflow-x: hidden;
-  background: #f8f1e8;
+  background: var(--background);
+  color: var(--foreground);
   font-family: var(--font-sans);
   text-rendering: geometricPrecision;
 }
@@ -29,8 +104,8 @@ button {
 }
 
 ::selection {
-  background: #006dff;
-  color: #ffffff;
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .text-balance {
@@ -198,15 +273,15 @@ button {
 }
 
 .section-copy {
-  @apply mt-6 max-w-2xl text-lg font-medium leading-8 text-ink/62;
+  @apply mt-6 max-w-2xl text-lg font-medium leading-8 text-muted-foreground;
 }
 
 .chip {
-  @apply rounded-full border border-ink/10 bg-white/70 px-4 py-2 text-sm font-black text-ink/62 shadow-sm backdrop-blur;
+  @apply rounded-full border border-border bg-surface px-4 py-2 text-sm font-black text-muted-foreground shadow-sm backdrop-blur;
 }
 
 .dashboard-shell {
-  @apply overflow-hidden rounded-[1.5rem] border border-ink/8 bg-white/55 shadow-soft backdrop-blur-xl;
+  @apply overflow-hidden rounded-[1.5rem] border border-border bg-surface shadow-soft backdrop-blur-xl;
 }
 
 .divider-grid {
@@ -216,7 +291,7 @@ button {
 }
 
 .pomodoro-shell {
-  @apply relative overflow-hidden rounded-[1.5rem] border border-ink/8 bg-lavender/65 p-5 shadow-soft md:p-8;
+  @apply relative overflow-hidden rounded-[1.5rem] border border-border bg-surface p-5 shadow-soft md:p-8;
 }
 
 .pomodoro-noise {
@@ -267,11 +342,11 @@ button {
 }
 
 .report-panel {
-  @apply rounded-[1.5rem] border border-ink/8 bg-white/72 p-5 shadow-soft backdrop-blur-xl md:p-7;
+  @apply rounded-[1.5rem] border border-border bg-surface p-5 shadow-soft backdrop-blur-xl md:p-7;
 }
 
 .goal-card {
-  @apply rounded-[1.5rem] border border-ink/8 bg-white/70 p-5 shadow-soft backdrop-blur-xl;
+  @apply rounded-[1.5rem] border border-border bg-surface p-5 shadow-soft backdrop-blur-xl;
 }
 
 .progress-ring {
@@ -309,15 +384,16 @@ button {
     radial-gradient(circle at 10% 8%, rgba(207, 233, 255, 0.72), transparent 28rem),
     radial-gradient(circle at 92% 16%, rgba(220, 212, 255, 0.56), transparent 26rem),
     radial-gradient(circle at 65% 82%, rgba(219, 232, 208, 0.52), transparent 24rem),
-    linear-gradient(180deg, #020712 0, #f8f1e8 21rem, #f9f6ef 100%);
+    linear-gradient(180deg, #020712 0, var(--background) 21rem, var(--background) 100%);
+  transition: background 0.3s ease;
 }
 
-.focus-app-shell.soft-dark {
+.dark .focus-app-shell {
   background:
-    radial-gradient(circle at 12% 8%, rgba(0, 109, 255, 0.22), transparent 28rem),
-    radial-gradient(circle at 88% 20%, rgba(220, 212, 255, 0.16), transparent 26rem),
-    linear-gradient(180deg, #020712 0, #08111f 25rem, #101a2b 100%);
-  color: #f8f1e8;
+    radial-gradient(circle at 12% 8%, rgba(96, 165, 250, 0.12), transparent 28rem),
+    radial-gradient(circle at 88% 20%, rgba(167, 139, 250, 0.1), transparent 26rem),
+    radial-gradient(circle at 65% 82%, rgba(134, 239, 172, 0.08), transparent 24rem),
+    linear-gradient(180deg, var(--color-night) 0, var(--background) 25rem, var(--background) 100%);
 }
 
 .app-section {
@@ -325,21 +401,17 @@ button {
 }
 
 .app-card {
-  border: 1px solid rgba(8, 17, 31, 0.08);
+  border: 1px solid var(--border);
   border-radius: 1.65rem;
-  background: rgba(255, 255, 255, 0.68);
+  background: var(--surface);
   padding: 1.25rem;
-  box-shadow: 0 28px 90px rgba(12, 22, 44, 0.11);
+  box-shadow: var(--card-shadow);
   backdrop-filter: blur(22px);
-}
-
-.soft-dark .app-card {
-  border-color: rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.08);
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .app-eyebrow {
-  color: #006dff;
+  color: var(--primary);
   font-size: 0.75rem;
   font-weight: 950;
   letter-spacing: 0.28em;
@@ -349,7 +421,7 @@ button {
 .app-title {
   margin-top: 0.75rem;
   max-width: 58rem;
-  color: #08111f;
+  color: var(--foreground);
   font-size: clamp(2rem, 4.8vw, 4.15rem);
   font-weight: 950;
   line-height: 0.94;
@@ -357,16 +429,10 @@ button {
   text-wrap: balance;
 }
 
-.soft-dark .app-title,
-.soft-dark .app-copy,
-.soft-dark .app-eyebrow {
-  color: #f8f1e8;
-}
-
 .app-copy {
   margin-top: 1rem;
   max-width: 45rem;
-  color: rgba(8, 17, 31, 0.62);
+  color: var(--muted-foreground);
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.75;
@@ -375,11 +441,11 @@ button {
 .app-input {
   width: 100%;
   min-height: 2.9rem;
-  border: 1px solid rgba(8, 17, 31, 0.08);
+  border: 1px solid var(--border);
   border-radius: 0.95rem;
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--surface-elevated);
   padding: 0.72rem 0.95rem;
-  color: #08111f;
+  color: var(--foreground);
   font-size: 0.95rem;
   font-weight: 800;
   outline: none;
@@ -387,16 +453,16 @@ button {
 }
 
 .app-input:focus {
-  border-color: rgba(88, 116, 190, 0.32);
-  background: #ffffff;
-  box-shadow: 0 0 0 4px rgba(207, 233, 255, 0.52);
+  border-color: var(--primary);
+  background: var(--surface);
+  box-shadow: 0 0 0 4px var(--muted);
 }
 
 select.app-input {
   appearance: none;
   background-image:
-    linear-gradient(45deg, transparent 50%, rgba(8, 17, 31, 0.52) 50%),
-    linear-gradient(135deg, rgba(8, 17, 31, 0.52) 50%, transparent 50%);
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
   background-position:
     calc(100% - 18px) 52%,
     calc(100% - 13px) 52%;
@@ -407,28 +473,25 @@ select.app-input {
 
 .premium-input {
   min-height: 2.75rem;
-  border-color: rgba(8, 17, 31, 0.07);
-  background-color: rgba(255, 255, 255, 0.74);
+  border-color: var(--border);
+  background-color: var(--surface-elevated);
   font-size: 0.9rem;
 }
 
 .wizard-card {
   max-height: min(90vh, 760px);
   overflow: auto;
-  border: 1px solid rgba(255, 255, 255, 0.68);
+  border: 1px solid var(--border);
   border-radius: 1.85rem;
-  background:
-    radial-gradient(circle at 8% 8%, rgba(207, 233, 255, 0.82), transparent 16rem),
-    radial-gradient(circle at 92% 14%, rgba(220, 212, 255, 0.62), transparent 17rem),
-    rgba(255, 250, 242, 0.94);
+  background: var(--surface);
   padding: 1.25rem;
-  box-shadow: 0 32px 120px rgba(8, 17, 31, 0.26);
+  box-shadow: var(--card-shadow);
   backdrop-filter: blur(28px);
 }
 
 .wizard-title {
   max-width: 36rem;
-  color: #08111f;
+  color: var(--foreground);
   font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 950;
   line-height: 0.96;
@@ -439,7 +502,7 @@ select.app-input {
 .wizard-copy {
   margin-top: 0.9rem;
   max-width: 34rem;
-  color: rgba(8, 17, 31, 0.6);
+  color: var(--muted-foreground);
   font-size: 1rem;
   font-weight: 650;
   line-height: 1.7;
@@ -447,11 +510,11 @@ select.app-input {
 
 .wizard-choice {
   min-height: 2.75rem;
-  border: 1px solid rgba(8, 17, 31, 0.07);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--surface-elevated);
   padding: 0.68rem 0.85rem;
-  color: rgba(8, 17, 31, 0.62);
+  color: var(--muted-foreground);
   font-size: 0.86rem;
   font-weight: 900;
   transition: transform 160ms ease, background 160ms ease, color 160ms ease, box-shadow 160ms ease;
@@ -459,13 +522,13 @@ select.app-input {
 
 .wizard-choice:hover {
   transform: translateY(-1px);
-  background: rgba(207, 233, 255, 0.72);
+  background: var(--muted);
 }
 
 .wizard-choice.selected {
-  background: #08111f;
-  color: #ffffff;
-  box-shadow: 0 16px 44px rgba(8, 17, 31, 0.16);
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: 0 16px 44px var(--card-shadow);
 }
 
 .app-nav-item {
@@ -475,32 +538,32 @@ select.app-input {
   gap: 0.8rem;
   border-radius: 1rem;
   padding: 0.8rem 0.9rem;
-  color: rgba(8, 17, 31, 0.58);
+  color: var(--muted-foreground);
   font-size: 0.9rem;
   font-weight: 950;
   transition: background 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
 .app-nav-item:hover {
-  background: rgba(8, 17, 31, 0.05);
-  color: #08111f;
+  background: var(--muted);
+  color: var(--foreground);
 }
 
 .app-nav-item.active {
-  background: #08111f;
-  color: #ffffff;
-  box-shadow: 0 16px 40px rgba(8, 17, 31, 0.16);
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: 0 16px 40px var(--card-shadow);
 }
 
 .task-card {
   display: flex;
   align-items: center;
   gap: 1rem;
-  border: 1px solid rgba(8, 17, 31, 0.06);
+  border: 1px solid var(--border);
   border-radius: 1.35rem;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--surface);
   padding: 0.95rem;
-  box-shadow: 0 12px 36px rgba(12, 22, 44, 0.06);
+  box-shadow: 0 12px 36px var(--card-shadow);
 }
 
 .mini-icon {
@@ -533,11 +596,18 @@ select.app-input {
   place-items: center;
   border-radius: 999px;
   background:
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.96) 0 58%, transparent 59%),
-    conic-gradient(#08111f var(--timer-value), rgba(8, 17, 31, 0.08) 0);
+    radial-gradient(circle at center, var(--surface) 0 58%, transparent 59%),
+    conic-gradient(var(--foreground) var(--timer-value), var(--muted) 0);
   box-shadow:
-    0 34px 100px rgba(8, 17, 31, 0.14),
-    inset 0 0 0 1px rgba(8, 17, 31, 0.08);
+    0 34px 100px var(--card-shadow),
+    inset 0 0 0 1px var(--border);
+  transition: box-shadow 0.3s ease;
+}
+
+.dark .product-timer-ring {
+  box-shadow:
+    0 0 80px var(--glow),
+    inset 0 0 0 1px var(--border);
 }
 
 .product-orb {
@@ -562,11 +632,11 @@ select.app-input {
   justify-content: center;
   gap: 0.45rem;
   border-radius: 999px;
-  background: #08111f;
-  color: #ffffff;
+  background: var(--foreground);
+  color: var(--background);
   font-size: 0.86rem;
   font-weight: 950;
-  box-shadow: 0 14px 34px rgba(8, 17, 31, 0.16);
+  box-shadow: 0 14px 34px var(--card-shadow);
   transition: transform 160ms ease, background 160ms ease;
 }
 

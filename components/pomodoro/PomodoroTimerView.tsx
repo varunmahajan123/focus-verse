@@ -161,18 +161,18 @@ export function PomodoroTimerView({
             >
               <div className="product-orb" />
               <div className="text-center">
-                <p className="text-xs font-black uppercase tracking-[0.24em] text-ink/42">{phase === "focus" ? "Focus" : "Break"}</p>
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-muted-foreground">{phase === "focus" ? "Focus" : "Break"}</p>
                 <div className="mt-2 text-5xl font-black tracking-normal md:text-6xl">{minutes}:{seconds}</div>
-                <p className="mt-3 text-sm font-black text-ink/48">{statusLabel}</p>
+                <p className="mt-3 text-sm font-black text-muted-foreground">{statusLabel}</p>
               </div>
             </div>
 
-            <div className="mt-5 w-full rounded-[1.4rem] bg-white/70 p-3 shadow-sm">
+            <div className="mt-5 w-full rounded-[1.4rem] bg-surface-elevated p-3 shadow-sm">
               <div className="grid grid-cols-4 gap-2">
                 {modes.map((item) => (
                   <button
                     key={item}
-                    className={`rounded-full px-3 py-3 text-sm font-black transition ${mode === item ? "bg-ink text-white" : "text-ink/55 hover:bg-ink/6"}`}
+                    className={`rounded-full px-3 py-3 text-sm font-black transition ${mode === item ? "bg-foreground text-background" : "text-muted-foreground hover:bg-muted"}`}
                     onClick={() => changeMode(item)}
                   >
                     {item}
@@ -182,7 +182,7 @@ export function PomodoroTimerView({
             </div>
 
             {mode === "Custom" ? (
-              <div className="mt-3 grid w-full grid-cols-2 gap-3 rounded-[1.4rem] bg-white/70 p-4 shadow-sm">
+              <div className="mt-3 grid w-full grid-cols-2 gap-3 rounded-[1.4rem] bg-surface-elevated p-4 shadow-sm">
                 <div className="space-y-2">
                   <FieldLabel>Focus</FieldLabel>
                   <input className="app-input" type="number" min={1} step={1} value={data.profile.customFocusMinutes} onChange={(event) => updateProfile({ customFocusMinutes: Number(event.target.value) })} />
@@ -199,8 +199,8 @@ export function PomodoroTimerView({
               <button className="timer-action" aria-label="Pause timer" onClick={pause} disabled={status !== "running"}><Pause size={19} /><span>Pause</span></button>
               <button className="timer-action" aria-label="Reset timer" onClick={reset}><RotateCcw size={19} /><span>Reset</span></button>
             </div>
-            <div className="mt-4 w-full rounded-[1.4rem] bg-white/70 p-4 text-sm font-bold leading-6 text-ink/58 shadow-sm">
-              <Sparkles className="mb-2 text-electric" size={18} />
+            <div className="mt-4 w-full rounded-[1.4rem] bg-surface-elevated p-4 text-sm font-bold leading-6 text-muted-foreground shadow-sm">
+              <Sparkles className="mb-2 text-primary" size={18} />
               {phase === "break" ? breakReminder : "Protect this one loop. Your only job is to stay with the next minute."}
             </div>
           </div>
@@ -211,7 +211,7 @@ export function PomodoroTimerView({
             <div className="flex items-center gap-3">
               <IconTile icon={TimerReset} tone="mist" />
               <div>
-                <p className="text-sm font-black text-ink/45">Completed sessions</p>
+                <p className="text-sm font-black text-muted-foreground">Completed sessions</p>
                 <h3 className="text-4xl font-black tracking-normal">{data.pomodoroSessions.length}</h3>
               </div>
             </div>
@@ -220,7 +220,7 @@ export function PomodoroTimerView({
             <div className="flex items-center gap-3">
               <IconTile icon={CheckCircle2} tone="sage" />
               <div>
-                <p className="text-sm font-black text-ink/45">Selected mode</p>
+                <p className="text-sm font-black text-muted-foreground">Selected mode</p>
                 <h3 className="text-2xl font-black tracking-normal">
                   {mode} • {durations.focus}/{durations.break} min
                 </h3>
@@ -231,13 +231,13 @@ export function PomodoroTimerView({
             <h3 className="text-xl font-black">Smart break system</h3>
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
               {["Drink water", "Stretch neck", "Walk 2 minutes", "Rest eyes", "Deep breaths", "Sleep warning late night"].map((item) => (
-                <div key={item} className="rounded-2xl bg-cream/80 p-3 text-sm font-black text-ink/58">{item}</div>
+                <div key={item} className="rounded-2xl bg-muted p-3 text-sm font-black text-foreground">{item}</div>
               ))}
             </div>
           </AppCard>
           <AppCard className="bg-sage/65">
             <h3 className="text-xl font-black">Focus pet garden</h3>
-            <p className="mt-2 text-sm font-bold leading-6 text-ink/58">
+            <p className="mt-2 text-sm font-bold leading-6 text-muted-foreground">
               Every completed Pomodoro adds XP. The garden concept is represented by your growing streak, badges, and focus score.
             </p>
           </AppCard>

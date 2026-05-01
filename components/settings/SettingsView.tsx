@@ -1,9 +1,10 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { RotateCcw, Settings } from "lucide-react";
 import { UserProfile } from "@/types/focusverse";
 import { AppCard, FieldLabel, IconTile, SectionHeader, SoftButton } from "@/components/shared/ProductPrimitives";
+import { useTheme } from "next-themes";
 
 export function SettingsView({
   profile,
@@ -24,10 +25,23 @@ export function SettingsView({
 }) {
   const [draft, setDraft] = useState(profile);
   const [saved, setSaved] = useState(false);
+  const { setTheme, theme: activeTheme } = useTheme();
+
+  useEffect(() => {
+    if (activeTheme && !["dark", "light", "system"].includes(activeTheme)) {
+       // activeTheme could be the raw string, let's map it back to Profile draft on mount if we want.
+    }
+  }, [activeTheme]);
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
     updateProfile(draft);
+    
+    // Apply theme via next-themes
+    if (draft.theme === "Midnight Focus") setTheme("dark");
+    else if (draft.theme === "Calm Light") setTheme("light");
+    else setTheme("system");
+
     setSaved(true);
     window.setTimeout(() => setSaved(false), 1800);
   };
@@ -91,7 +105,7 @@ export function SettingsView({
               <input className="app-input" type="time" value={draft.wakeTime} onChange={(event) => setDraft({ ...draft, wakeTime: event.target.value })} />
             </div>
             <div className="space-y-2">
-              <FieldLabel>Sleep time</FieldLabel>
+               <FieldLabel>Sleep time</FieldLabel>
               <input className="app-input" type="time" value={draft.sleepTime} onChange={(event) => setDraft({ ...draft, sleepTime: event.target.value })} />
             </div>
           </div>
@@ -108,7 +122,8 @@ export function SettingsView({
             <FieldLabel>Theme preference</FieldLabel>
             <select className="app-input" value={draft.theme} onChange={(event) => setDraft({ ...draft, theme: event.target.value as UserProfile["theme"] })}>
               <option>Calm Light</option>
-              <option>Soft Dark</option>
+              <option>Midnight Focus</option>
+              <option>System</option>
             </select>
           </div>
           <div className="space-y-2">
@@ -121,14 +136,14 @@ export function SettingsView({
               <option>Distractions</option>
             </select>
           </div>
-          <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-3 border-t border-ink/8 pt-5">
-            <div className="text-sm font-bold text-ink/52">{saved ? "Settings saved." : "Changes apply instantly after save."}</div>
+          <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-5">
+            <div className="text-sm font-bold text-muted-foreground">{saved ? "Settings saved." : "Changes apply instantly after save."}</div>
             <div className="flex gap-2">
               <SoftButton type="submit">Save settings</SoftButton>
-              <SoftButton variant="ghost" onClick={exportData}>Export JSON</SoftButton>
-              <SoftButton variant="secondary" onClick={confirmLoadDemo}>Load demo data</SoftButton>
-              <SoftButton variant="ghost" onClick={confirmClearDemo} disabled={!demoMode}>Clear demo data</SoftButton>
-              <SoftButton variant="danger" onClick={confirmReset}><RotateCcw size={16} /> Reset app data</SoftButton>
+              <SoftButton variant="ghost" onClick={exportData} type="button">Export JSON</SoftButton>
+              <SoftButton variant="secondary" onClick={confirmLoadDemo} type="button">Load demo data</SoftButton>
+              <SoftButton variant="ghost" onClick={confirmClearDemo} disabled={!demoMode} type="button">Clear demo data</SoftButton>
+              <SoftButton variant="danger" onClick={confirmReset} type="button"><RotateCcw size={16} /> Reset app data</SoftButton>
             </div>
           </div>
         </form>

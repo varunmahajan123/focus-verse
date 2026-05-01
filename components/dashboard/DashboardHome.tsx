@@ -14,6 +14,7 @@ import {
 import { Area, AreaChart, ResponsiveContainer } from "recharts";
 import { AppData } from "@/types/focusverse";
 import { AppCard, EmptyState, IconTile, ProgressRing, SectionHeader, SoftButton } from "@/components/shared/ProductPrimitives";
+import { useTheme } from "next-themes";
 import {
   analyzeBacklog,
   completionPercentage,
@@ -39,6 +40,8 @@ export function DashboardHome({
   const topGoal = data.goals[0];
   const completedPercent = completionPercentage(data.tasks);
   const nudge = motivationNudge(score, backlog.count);
+  const { theme } = useTheme();
+  const chartStroke = theme === "dark" ? "#60A5FA" : "#08111f";
 
   return (
     <section className="app-section">
@@ -54,8 +57,8 @@ export function DashboardHome({
         }
       />
 
-      <div className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-        <AppCard className="overflow-hidden bg-white/72 p-0">
+      <div className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
+        <AppCard className="overflow-hidden bg-surface p-0 flex flex-col">
           <div className="grid gap-5 p-5 md:grid-cols-[auto_1fr] md:p-6">
             <ProgressRing value={score} size="md" label="focus score" />
             <div className="flex flex-col justify-between">
@@ -82,7 +85,7 @@ export function DashboardHome({
           </div>
         </AppCard>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
           <AppCard className="bg-mist/75">
             <div className="flex items-center justify-between">
               <IconTile icon={TimerReset} tone="ink" />
@@ -91,7 +94,7 @@ export function DashboardHome({
             <h3 className="mt-8 text-3xl font-black tracking-normal">{data.pomodoroSessions.length} sessions</h3>
             <p className="mt-2 text-sm font-bold text-ink/58">Pomodoro history saved locally.</p>
           </AppCard>
-          <AppCard className="bg-white/70">
+          <AppCard className="bg-surface flex flex-col justify-center">
             <div className="flex items-center justify-between">
               <IconTile icon={Flame} tone="peach" />
               <span className="rounded-full bg-ink px-3 py-1 text-xs font-black text-white">{data.xp} XP</span>
@@ -102,7 +105,7 @@ export function DashboardHome({
         </div>
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-4">
+      <div className="mt-5 grid gap-5 lg:grid-cols-4">
         <AppCard className="lg:col-span-2">
           <div className="mb-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -159,7 +162,7 @@ export function DashboardHome({
         </AppCard>
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+      <div className="mt-5 grid gap-5 lg:grid-cols-3">
         <AppCard className="lg:col-span-2">
           <div className="mb-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -178,7 +181,7 @@ export function DashboardHome({
                       <stop offset="100%" stopColor="#9fb996" stopOpacity={0.03} />
                     </linearGradient>
                   </defs>
-                  <Area dataKey="score" stroke="#08111f" strokeWidth={4} fill="url(#dashScore)" type="monotone" />
+                  <Area dataKey="score" stroke={chartStroke} strokeWidth={4} fill="url(#dashScore)" type="monotone" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -191,7 +194,7 @@ export function DashboardHome({
           )}
         </AppCard>
 
-        <div className="grid gap-4">
+        <div className="grid gap-5">
           <AppCard>
             <div className="flex items-center gap-3">
               <IconTile icon={Leaf} tone="sage" />

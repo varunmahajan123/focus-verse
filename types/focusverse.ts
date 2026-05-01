@@ -18,7 +18,7 @@ export type Struggle =
 
 export type TaskCategory = "Study" | "Coding" | "Work" | "Fitness" | "Personal" | "Exam";
 export type TaskPriority = "Low" | "Medium" | "High";
-export type ThemePreference = "Calm Light" | "Soft Dark";
+export type ThemePreference = "Calm Light" | "Midnight Focus" | "System";
 
 export type UserProfile = {
   name: string;

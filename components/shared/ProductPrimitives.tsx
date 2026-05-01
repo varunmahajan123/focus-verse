@@ -65,11 +65,11 @@ export function SoftButton({
   className?: string;
 }) {
   const variants = {
-    primary: "bg-ink text-white shadow-soft hover:-translate-y-0.5",
-    secondary: "bg-white text-ink border border-ink/8 hover:-translate-y-0.5",
-    ghost: "bg-ink/5 text-ink hover:bg-ink/8",
-    danger: "bg-[#ffe3dc] text-[#8a2e1c] hover:bg-[#ffd4c8]",
-    light: "bg-white text-ink shadow-soft hover:-translate-y-0.5 hover:bg-mist"
+    primary: "bg-foreground text-background shadow-soft hover:-translate-y-0.5 hover:bg-foreground/90",
+    secondary: "bg-surface-elevated text-foreground border border-border hover:-translate-y-0.5",
+    ghost: "bg-muted text-foreground hover:bg-muted/80",
+    danger: "bg-coral/30 text-red-700 hover:bg-coral/40 dark:text-red-400",
+    light: "bg-white text-night shadow-soft hover:-translate-y-0.5 hover:bg-white/90"
   };
 
   return (
@@ -92,12 +92,12 @@ export function IconTile({
   tone?: "mist" | "sage" | "lavender" | "peach" | "cream" | "ink";
 }) {
   const tones = {
-    mist: "bg-mist text-ink",
-    sage: "bg-sage text-ink",
-    lavender: "bg-lavender text-ink",
-    peach: "bg-coral/60 text-ink",
-    cream: "bg-cream text-ink",
-    ink: "bg-ink text-white"
+    mist: "bg-accent-blue/50 text-foreground",
+    sage: "bg-accent-sage/50 text-foreground",
+    lavender: "bg-accent-lavender/50 text-foreground",
+    peach: "bg-accent-peach/50 text-foreground",
+    cream: "bg-surface text-foreground",
+    ink: "bg-foreground text-background"
   };
   return (
     <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl ${tones[tone]}`}>
@@ -123,13 +123,13 @@ export function ProgressRing({
 
   return (
     <div
-      className={`grid place-items-center rounded-full bg-[conic-gradient(#08111f_var(--value),rgba(8,17,31,0.08)_0)] p-2 ${sizes[size]}`}
-      style={{ "--value": `${Math.max(0, Math.min(100, value))}%` } as React.CSSProperties}
+      className={`grid place-items-center rounded-full bg-muted p-2 ${sizes[size]}`}
+      style={{ background: `conic-gradient(var(--foreground) var(--value), var(--muted) 0)` } as React.CSSProperties}
     >
-      <div className="grid h-full w-full place-items-center rounded-full bg-white text-center shadow-inner">
+      <div className="grid h-full w-full place-items-center rounded-full bg-surface-elevated text-center shadow-inner">
         <div>
           <div className="font-black tracking-normal">{value}%</div>
-          {label ? <div className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-ink/45">{label}</div> : null}
+          {label ? <div className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">{label}</div> : null}
         </div>
       </div>
     </div>
@@ -148,17 +148,17 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="rounded-[1.5rem] border border-dashed border-ink/12 bg-white/55 p-8 text-center">
-      <div className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-mist">
+    <div className="rounded-[1.5rem] border border-dashed border-border bg-surface p-8 text-center">
+      <div className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-muted text-foreground">
         <Icon size={20} />
       </div>
       <h3 className="mt-4 text-xl font-black">{title}</h3>
-      <p className="mx-auto mt-2 max-w-md text-sm font-medium leading-6 text-ink/58">{copy}</p>
+      <p className="mx-auto mt-2 max-w-md text-sm font-medium leading-6 text-muted-foreground">{copy}</p>
       {action ? <div className="mt-5">{action}</div> : null}
     </div>
   );
 }
 
 export function FieldLabel({ children }: { children: ReactNode }) {
-  return <label className="text-xs font-black uppercase tracking-[0.18em] text-ink/45">{children}</label>;
+  return <label className="text-xs font-black uppercase tracking-[0.18em] text-muted-foreground">{children}</label>;
 }

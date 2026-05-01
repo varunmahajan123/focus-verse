@@ -99,7 +99,7 @@ export function TaskManager({
               <IconTile icon={Plus} tone="mist" />
               <div>
                 <h3 className="text-xl font-black">{editingId ? "Edit task" : "Add task"}</h3>
-                <p className="text-sm font-bold text-ink/45">Keep it small and specific.</p>
+                <p className="text-sm font-bold text-muted-foreground">Keep it small and specific.</p>
               </div>
             </div>
             <div className="space-y-2">
@@ -140,7 +140,7 @@ export function TaskManager({
         <AppCard>
           <div className="mb-5 grid gap-3 md:grid-cols-[1fr_auto_auto_auto]">
             <div className="relative">
-              <Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink/35" size={17} />
+              <Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={17} />
               <input className="app-input pl-11" placeholder="Search tasks" value={filters.search} onChange={(event) => setFilters({ ...filters, search: event.target.value })} />
             </div>
             <select className="app-input" value={filters.priority} onChange={(event) => setFilters({ ...filters, priority: event.target.value as TaskFilters["priority"] })}>
@@ -164,18 +164,18 @@ export function TaskManager({
                 <div key={task.id} className={`task-card ${task.completed ? "opacity-65" : ""}`}>
                   <button
                     aria-label={task.completed ? "Mark incomplete" : "Mark complete"}
-                    className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl border transition ${task.completed ? "border-sage bg-sage" : "border-ink/10 bg-white"}`}
+                    className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl border transition ${task.completed ? "border-sage bg-sage text-foreground" : "border-border bg-surface text-foreground"}`}
                     onClick={() => toggleTask(task.id)}
                   >
                     {task.completed ? <Check size={18} /> : null}
                   </button>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className={`truncate text-lg font-black ${task.completed ? "line-through" : ""}`}>{task.title}</h3>
-                      <span className="rounded-full bg-mist px-2.5 py-1 text-[11px] font-black uppercase tracking-[0.12em] text-ink/55">{task.category}</span>
-                      <span className={`rounded-full px-2.5 py-1 text-[11px] font-black uppercase tracking-[0.12em] ${task.priority === "High" ? "bg-coral/60" : task.priority === "Medium" ? "bg-lavender" : "bg-sage"}`}>{task.priority}</span>
+                      <h3 className={`truncate text-lg font-black ${task.completed ? "line-through opacity-60" : ""}`}>{task.title}</h3>
+                      <span className="rounded-full bg-muted px-2.5 py-1 text-[11px] font-black uppercase tracking-[0.12em] text-foreground">{task.category}</span>
+                      <span className={`rounded-full px-2.5 py-1 text-[11px] font-black uppercase tracking-[0.12em] ${task.priority === "High" ? "bg-coral/60 text-red-900 dark:text-red-100" : task.priority === "Medium" ? "bg-lavender text-indigo-900 dark:text-indigo-100" : "bg-sage text-green-900 dark:text-green-100"}`}>{task.priority}</span>
                     </div>
-                    <div className="mt-2 flex flex-wrap items-center gap-3 text-xs font-bold text-ink/45">
+                    <div className="mt-2 flex flex-wrap items-center gap-3 text-xs font-bold text-muted-foreground">
                       <span>{task.deadline}</span>
                       <span>{task.estimatedMinutes} min</span>
                       <span>{task.completed ? "Completed" : "Open"}</span>

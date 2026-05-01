@@ -6,17 +6,27 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./lib/**/*.{js,ts,jsx,tsx,mdx}"
   ],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        ink: "#08111f",
-        night: "#020712",
-        cream: "#f8f1e8",
-        lavender: "#dcd4ff",
-        sage: "#dbe8d0",
-        mist: "#cfe9ff",
-        coral: "#ffb7a1",
-        electric: "#006dff"
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        surface: "var(--surface)",
+        "surface-elevated": "var(--surface-elevated)",
+        border: "var(--border)",
+        muted: "var(--muted)",
+        "muted-foreground": "var(--muted-foreground)",
+        primary: "var(--primary)",
+        "primary-foreground": "var(--primary-foreground)",
+        ink: "var(--color-ink)",
+        night: "var(--color-night)",
+        cream: "var(--color-cream)",
+        lavender: "var(--accent-lavender)",
+        sage: "var(--accent-sage)",
+        mist: "var(--accent-blue)",
+        coral: "var(--accent-peach)",
+        electric: "var(--color-electric)"
       },
       fontFamily: {
         sans: ["var(--font-sans)", "Inter", "system-ui", "sans-serif"]

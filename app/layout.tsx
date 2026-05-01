@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LenisProvider } from "@/components/LenisProvider";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,9 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <LenisProvider>{children}</LenisProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased text-foreground bg-background">
+        <ThemeProvider>
+          <LenisProvider>{children}</LenisProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

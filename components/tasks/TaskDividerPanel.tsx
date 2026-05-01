@@ -43,7 +43,7 @@ export function TaskDividerPanel({
               <IconTile icon={Layers3} tone="lavender" />
               <div>
                 <h3 className="text-xl font-black">Break down a big task</h3>
-                <p className="text-sm font-bold text-ink/45">The output can be added to your task feeder.</p>
+                <p className="text-sm font-bold text-muted-foreground">The output can be added to your task feeder.</p>
               </div>
             </div>
             <div className="space-y-2">
@@ -84,7 +84,7 @@ export function TaskDividerPanel({
         <AppCard>
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-sm font-black text-ink/45">Generated subtasks</p>
+              <p className="text-sm font-black text-muted-foreground">Generated subtasks</p>
               <h3 className="text-2xl font-black">{subtasks.length ? `${subtasks.length} focused blocks` : "Ready when you are"}</h3>
             </div>
             <SoftButton
@@ -101,20 +101,20 @@ export function TaskDividerPanel({
 
           <div className="space-y-3">
             {subtasks.length ? subtasks.map((subtask, index) => (
-              <div key={subtask.id} className="flex items-center justify-between rounded-[1.15rem] bg-cream/75 p-4">
+              <div key={subtask.id} className="flex items-center justify-between rounded-[1.15rem] bg-surface-elevated p-4">
                 <div className="flex items-center gap-3">
-                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-white text-sm font-black">{index + 1}</span>
+                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-surface text-foreground text-sm font-black">{index + 1}</span>
                   <div>
                     <h4 className="font-black">{subtask.title}</h4>
-                    <p className="mt-1 text-xs font-bold text-ink/45">{subtask.estimatedMinutes} min • {subtask.category}</p>
+                    <p className="mt-1 text-xs font-bold text-muted-foreground">{subtask.estimatedMinutes} min • {subtask.category}</p>
                   </div>
                 </div>
-                <span className={`rounded-full px-3 py-1 text-xs font-black ${subtask.urgent ? "bg-coral/60" : "bg-sage"}`}>
+                <span className={`rounded-full px-3 py-1 text-xs font-black ${subtask.urgent ? "bg-coral/60 text-foreground" : "bg-sage text-foreground"}`}>
                   {subtask.urgent ? "Urgent" : subtask.priority}
                 </span>
               </div>
             )) : (
-              <div className="rounded-[1.25rem] bg-mist/55 p-6 text-sm font-bold leading-6 text-ink/58">
+              <div className="rounded-[1.25rem] bg-muted p-6 text-sm font-bold leading-6 text-muted-foreground">
                 {addedMessage || "Try a large study or coding task. If it is over 90 minutes, Focusverse splits it into 3-5 blocks."}
               </div>
             )}

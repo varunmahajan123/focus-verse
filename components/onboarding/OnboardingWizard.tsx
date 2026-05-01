@@ -107,7 +107,7 @@ export function OnboardingWizard({
   };
 
   return (
-    <div className="fixed inset-0 z-[90] grid place-items-center bg-ink/40 px-4 py-6 backdrop-blur-2xl">
+    <div className="fixed inset-0 z-[90] grid place-items-center bg-black/40 px-4 py-6 backdrop-blur-2xl">
       <form
         onSubmit={submit}
         className="wizard-card w-full max-w-[760px]"
@@ -116,18 +116,18 @@ export function OnboardingWizard({
           <div className="flex items-center gap-3">
             <IconTile icon={StepIcon} tone={step === 5 ? "sage" : "mist"} />
             <div>
-              <p className="text-xs font-black text-ink/42">Step {step + 1} of {stepMeta.length}</p>
+              <p className="text-xs font-black text-muted-foreground">Step {step + 1} of {stepMeta.length}</p>
               <h2 className="text-2xl font-black tracking-normal">{stepMeta[step].title}</h2>
             </div>
           </div>
-          <button type="button" className="rounded-full bg-ink/5 px-3 py-2 text-xs font-black text-ink/55" onClick={onClose}>
+          <button type="button" className="rounded-full bg-muted px-3 py-2 text-xs font-black text-muted-foreground" onClick={onClose}>
             Later
           </button>
         </div>
 
         <div className="mb-7 grid grid-cols-6 gap-2">
           {stepMeta.map((item, index) => (
-            <div key={item.title} className={`h-2 rounded-full transition ${index <= step ? "bg-ink" : "bg-ink/10"}`} />
+            <div key={item.title} className={`h-2 rounded-full transition ${index <= step ? "bg-foreground" : "bg-border"}`} />
           ))}
         </div>
 
@@ -258,7 +258,7 @@ export function OnboardingWizard({
                 <p className="wizard-copy">Start small. These become your real dashboard and planner data.</p>
                 <div className="mt-6 space-y-3">
                   {tasks.map((task, index) => (
-                    <div key={index} className="rounded-[1.25rem] bg-white/70 p-3 shadow-sm">
+                    <div key={index} className="rounded-[1.25rem] bg-surface-elevated p-3 shadow-sm">
                       <div className="grid gap-3 md:grid-cols-[1fr_7rem_7rem_8rem]">
                         <input className="app-input premium-input" placeholder={`Task ${index + 1}`} value={task.title} onChange={(event) => setTasks(tasks.map((item, itemIndex) => itemIndex === index ? { ...item, title: event.target.value } : item))} />
                         <input className="app-input premium-input" type="number" min={5} value={task.estimatedMinutes} onChange={(event) => setTasks(tasks.map((item, itemIndex) => itemIndex === index ? { ...item, estimatedMinutes: Number(event.target.value) } : item))} />
@@ -278,7 +278,7 @@ export function OnboardingWizard({
             {step === 5 ? (
               <div className="grid min-h-[330px] place-items-center text-center">
                 <div>
-                  <div className="mx-auto grid h-16 w-16 place-items-center rounded-[1.4rem] bg-sage text-ink shadow-soft">
+                  <div className="mx-auto grid h-16 w-16 place-items-center rounded-[1.4rem] bg-sage text-foreground shadow-soft">
                     <CheckCircle2 size={28} />
                   </div>
                   <h3 className="wizard-title mt-6">Your Focusverse is ready.</h3>
@@ -291,7 +291,7 @@ export function OnboardingWizard({
           </motion.div>
         </AnimatePresence>
 
-        <div className="mt-6 flex items-center justify-between border-t border-ink/8 pt-5">
+        <div className="mt-6 flex items-center justify-between border-t border-border pt-5">
           <SoftButton variant="ghost" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))}>
             <ArrowLeft size={16} />
             Back
